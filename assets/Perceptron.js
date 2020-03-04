@@ -1,6 +1,7 @@
 export default class Perceptron {
   constructor() {
     this.weights = new Array(2)
+    this.learningRate = 0.1
 
     // Assing random weights
     for (let i = 0; i < this.weights.length; i++) {
@@ -12,9 +13,9 @@ export default class Perceptron {
   guess(inputs) {
     let sum = 0
 
-    this.weights.forEach((weight, index) => {
-      sum += inputs[index] * weight
-    });
+    for (let i = 0; i < this.weights.length; i++) {
+      sum += inputs[i] * this.weights[i]
+    };
 
     return this.sign(sum)
   }
@@ -22,5 +23,15 @@ export default class Perceptron {
   // Step 2 - ACTIVATION FUNCTION
   sign(num) {
     return num >= 0 ? 1 : -1
+  }
+
+  train(inputs, target) {
+    let guess = this.guess(inputs)
+    let error = target - guess
+
+    // Tune weights
+    for (let i = 0; i < this.weights.length; i++) {
+      this.weights[i] += error * inputs[i] * this.learningRate
+    }
   }
 }
