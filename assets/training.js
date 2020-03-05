@@ -12,11 +12,18 @@ export default class Point {
     Point.canvasHeight = height
   }
 
-  show(ctx) {
+  show(ctx, guess) {
     ctx.beginPath()
     ctx.arc(this.x, this.y, 5, 0, 2 * Math.PI)
 
-    if (this.label == 1) ctx.stroke()
+    let color = guess == this.label
+                  ? '#006666'
+                  : '#92153b'
+
+    ctx.fillStyle = color
+    ctx.strokeStyle = color
+
+    if (guess == 1) ctx.stroke()
     else ctx.fill()
   }
 }

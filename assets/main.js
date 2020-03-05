@@ -24,34 +24,29 @@ canvas.addEventListener('click', () => {
 })
 
 function setUpCanvas() {
-  ctx.beginPath()
-  ctx.moveTo(0, 0)
-  ctx.lineTo(canvas.width, canvas.height)
-  ctx.stroke()
-
   Point.setCanvasDimens(canvas.width, canvas.height)
 
   for (let i = 0; i < points.length; i++) {
     points[i] = new Point()
-    points[i].show(ctx)
   }
 }
 
 function showCheck() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+  // Drawind divisor
+  ctx.beginPath()
+  ctx.strokeStyle = '#aaa'
+  ctx.moveTo(0, 0)
+  ctx.lineTo(canvas.width, canvas.height)
+  ctx.stroke()
   
   points.forEach(point => {
     let inputs = [point.x, point.y]
     let target = point.label
   
     let guess = perceptron.guess(inputs)
-    let color = '#92153b'
   
-    if (guess == target) color = '#006666'
-
-    ctx.fillStyle = color
-    ctx.strokeStyle = color
-  
-    point.show(ctx)
+    point.show(ctx, guess)
   })
 }
